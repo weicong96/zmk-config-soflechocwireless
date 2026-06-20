@@ -16,9 +16,9 @@
         default_layer {
 // ------------------------------------------------------------------------------------------------------------
 // |  `    |  1  |  2  |  3   |  4   |  5   |                         |  6   |  7    |  8    |  9   |   0   |       |
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                         |  Y   |  U    |  I    |  O   |   P   | BKSPC |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                         |  H   |  J    |  K    |  L   |   ;   |   '   |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   |  MUTE  |        | ExtPw |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+// |  ESC  |  Q  |  W  |  F   |  P   |  B   |                         |  J   |  L    |  U    |  Y   |   ;   | BKSPC |
+// |  TAB  |  A  |  R  |  S   |  T   |  G   |                         |  M   |  N    |  E    |  I   |   O   |   '   |
+// | SHIFT |  Z  |  X  |  C   |  D   |  V   |  MUTE  |        | ExtPw |  K   |  H    |  ,    |  .   |   /   | SHIFT |
 //               | GUI | ALT  | CTRL | LOWER|  ENTER |        | SPACE | RAISE| CTRL  | ALT   | GUI  |
             bindings = <
 &kp GRAVE &kp N1 &kp N2   &kp N3   &kp N4    &kp N5                              &kp N6 &kp N7    &kp N8    &kp N9   &kp N0   &none
