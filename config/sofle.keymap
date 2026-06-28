@@ -10,28 +10,18 @@
 #include <dt-bindings/zmk/ext_power.h>
 
 / {
+    macros {
+        hyper: hyper {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <
+                &macro_press &kp LCTRL &kp LALT &kp LSHIFT &kp LGUI
+                &macro_pause_for_release
+                &macro_release &kp LGUI &kp LSHIFT &kp LALT &kp LCTRL
+            >;
+        };
+    };
     behaviors {
-        /*
-         * Homerow mod hold-tap behavior
-         *
-         * flavor = "balanced":
-         *   - If you tap and release before tapping another key → letter
-         *   - If you hold past tapping-term OR press+release another key while held → modifier
-         *   This is the best all-round flavor for homerow mods.
-         *
-         * tapping-term-ms = 280:
-         *   Time in ms to distinguish tap vs hold. 200–300 is typical;
-         *   raise it if you get accidental mods, lower if holds feel sluggish.
-         *
-         * quick-tap-ms = 175:
-         *   If you tap the key within this time of a previous tap of the SAME key,
-         *   it always registers as a tap (not a hold). This allows fast repeated
-         *   letter typing without triggering the modifier.
-         *
-         * require-prior-idle-ms = 150:
-         *   Key must be idle for this long before a hold activates the modifier.
-         *   Prevents accidental mods during fast typing rolls.
-         */
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -46,31 +36,20 @@
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
-// ╭─────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                         ╭──────────┬──────────┬──────────┬──────────┬──────────┬─────────╮
-// │  ESC    │    1     │    2     │    3     │    4     │    5     │                         │    6     │    7     │    8     │    9     │    0     │  BSPC   │
-// ├─────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                         ├──────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-// │  TAB    │    Q     │    W     │    F     │    P     │    B     │                         │    J     │    L     │    U     │    Y     │    ;     │    \    │
-// ├─────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                         ├──────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-// │    `    │  LT1/A   │  CTRL/R  │  GUI/S   │  SHFT/T  │    G     │                         │    M     │  SHFT/N  │  GUI/E   │  CTRL/I  │  LT1/O   │    '    │
-// ├─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────╮   ╭──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-// │  CAPS   │    Z     │    X     │    C     │    D     │    V     │  LEFT    │   │  RIGHT   │    K     │    H     │    ,     │    .     │    /     │ RSHFT   │
-// ╰─────────┴──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┴─────────╯
-//                      |  LCTRL   │   LALT   │   LGUI   │    LT1   │  SPACE   │   │  BSPC    │  RET     │  RGUI    │  RALT    │  RCTRL   │
-//                      ╰──────────┴──────────┴──────────┴──────────╯──────────╯   ╰──────────┴──────────┴──────────┴──────────╯──────────╯
-            bindings = <
-&kp ESC    &kp N1       &kp N2       &kp N3       &kp N4        &kp N5                         &kp N6  &kp N7        &kp N8        &kp N9       &kp N0       &kp BSPC
-&kp TAB      &kp Q        &kp W        &kp F        &kp P         &kp B                        &kp J   &kp L         &kp U         &kp Y        &kp SEMI     &kp BSLH
-&kp GRAVE      &lt 1 A   &hm LCTRL R  &hm LGUI S   &hm LSHFT T   &kp G                         &kp M   &hm RSHFT N   &hm RGUI E    &hm RCTRL I     &lt 1 O      &kp SQT
-&kp CAPS    &kp Z        &kp X        &kp C        &kp D         &kp V   &trans  &trans   &kp K   &kp H         &kp COMMA     &kp DOT      &kp FSLH     &kp RSHFT
-                          &kp LCTRL    &kp LALT    &mo 2         &mo 1   &kp SPACE &kp RET     &kp BSPC   &kp RGUI     &kp RALT      &kp RCTRL
-            >;
+        default_layer { 
 
-//            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        bindings = <
+//  | ESC |     1       |   2      |    3     |     4   |   5  |          |   6    |   7      |    8     |    9       |     0      |  BACKSPACE |
+    &kp ESC   &kp N1      &kp N2      &kp N3      &kp N4  &kp N5             &kp N6  &kp N7      &kp N8      &kp N9      &kp N0         &kp BSPC
+    &kp TAB    &kp Q   &kp W  &kp F    &kp P  &kp B                          &kp J   &kp L         &kp U         &kp Y        &kp SEMI     &kp BSLH
+//  |  `     |     A    |    R     |    S     |     T    |  G |            |  M   |     N     |     E    |     I      |    1\O     |    '   |             
+    &kp GRAVE  &lt 1 A &hm LCTRL R  &hm LGUI S &hm LSHFT T &kp G             &kp M   &hm RSHFT N &hm RGUI E &hm RCTRL I    &lt 1 O     &kp SQT
+    &kp CAPS    &kp Z        &kp X        &kp C        &kp D         &kp V   &trans  &trans   &kp K   &kp H         &kp COMMA     &kp DOT      &kp FSLH     &kp RSHFT
+                              &kp LCTRL    &kp LALT    &mo 2         &mo 1   &kp SPACE &kp RET     &kp BSPC   &hyper     &kp RALT      &kp RCTRL
+            >;
         };
 
         lower_layer {
-
             bindings = <
 &trans    &kp F1    &kp F2    &kp F3          &kp F4    &kp F5                         &kp F6    &kp F7     &kp F8          &kp F9    &kp F10   &kp F11
 &trans    &kp TILDE &kp GRAVE &kp HASH        &kp AMPS    &kp PIPE                     &kp CARET &kp LBRC   &kp RBRC        &kp LBKT   &kp RBKT  &trans
@@ -78,17 +57,9 @@
 &trans    &kp PRCNT &kp QMARK &kp KP_MULTIPLY &kp KP_PLUS  &kp BSLH    &trans  &trans  &kp FSLH  &kp MINUS  &kp LT          &kp GT      &kp DQT   &trans
                     &trans    &trans      &trans    &trans    &trans   &trans  &trans    &trans   &trans          &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
         raise_layer {
-// ------------------------------------------------------------------------------------------------------------
-// |BTCLR| BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |      |      |       |      |       |       |
-// |     | INS  | PSCR | GUI   |       |      |                | PGUP |      |   ^   |      |       |       |
-// |     | ALT  | CTRL | SHIFT |       | CAPS |                | PGDN |   <- |   v   |  ->  |  DEL  | BKSPC |
-// |     | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |      |       |      |       |       |
-//              |      |       |       |      |      |  |      |      |      |       |      |
             bindings = <
 &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4             &trans    &trans    &trans   &trans    &trans  &trans
 &trans     &kp INS      &kp PSCRN    &kp K_CMENU  &trans       &trans                   &kp PG_UP &trans    &kp UP   &trans    &kp N0  &trans
@@ -96,8 +67,6 @@
 &trans     &kp K_UNDO   &kp K_CUT    &kp K_COPY   &kp K_PASTE  &trans  &trans   &trans  &trans    &trans    &trans   &trans    &trans  &trans
                         &trans       &trans       &trans       &trans  &trans   &trans  &trans    &trans    &trans   &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
